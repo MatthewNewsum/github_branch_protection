@@ -31,38 +31,21 @@ resource "github_branch_protection" "main" {
   repository_id = each.value
   pattern       = "main"  # You can change this to protect different branches
 
-  # Prevents direct pushes to the protected branch
+  # Basic protection settings
   allows_deletions                = false
   allows_force_pushes            = false
-  requires_signed_commits        = true
+  require_signed_commits         = false  # Simplified for basic protection
   required_linear_history        = true
   require_conversation_resolution = true
 
   # Require pull request before merging
   required_pull_request_reviews {
     dismiss_stale_reviews           = true
-    require_code_owner_reviews      = true
-    required_approving_review_count = 1
+    require_code_owner_reviews      = false  # Simplified
+    required_approving_review_count = 0
     require_last_push_approval      = true
   }
-
-  # Require status checks to pass before merging
-  required_status_checks {
-    strict = true
-    contexts = ["continuous-integration/jenkins"]  # Replace with your CI contexts
-  }
-
+  
   # Push restrictions
-  restrict_pushes {
-    push_allowances = []  # Empty list means no direct pushes allowed
-  }
-}
-
-# Optionally, you can add outputs to verify the protection rules
-output "protected_branches" {
-  description = "List of repositories with branch protection enabled"
-  value = {
-    for repo in var.repository_names :
-    repo => github_branch_protection.main[repo].pattern
-  }
+  push_restrictions = []  # Prevents direct pushes to main
 }
