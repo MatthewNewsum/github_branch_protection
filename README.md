@@ -1,6 +1,8 @@
 # GitHub Branch Protection Terraform Configuration
 
-Automate GitHub repository branch protection rules using Terraform. This configuration enforces consistent security practices across multiple repositories.
+Automate GitHub repository branch protection rules using Terraform. This configuration enforces consistent security practices across multiple repositories.  
+
+Single developer, does not need approval / review to merge, just protects main from accidental direct push
 
 ## Features
 
